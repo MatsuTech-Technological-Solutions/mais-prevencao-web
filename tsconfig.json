@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx", // Ou "react" para React anterior à versão 17
+    "strict": true, // Opcional, mas recomendável para TS
+    "types": ["styled-components"],
+    "esModuleInterop": true, // Necessário para Styled-Components
+    "moduleResolution": "node"
+  }
+}
