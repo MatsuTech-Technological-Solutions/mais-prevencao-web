@@ -7,9 +7,13 @@ import { Medical } from "./components/frames/services/medical";
 import { FireFighting } from "./components/frames/services/fireFighting";
 import { Development } from "./components/frames/services/development";
 
+const routerBasename = window.location.hostname.endsWith("github.io")
+  ? "/mais-prevencao-web"
+  : undefined;
+
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />}>

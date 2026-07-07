@@ -53,7 +53,7 @@ forem confirmados.
 ## Configuração de email
 
 O envio do formulário usa EmailJS. A configuração pública fica em
-`public/config.js` e é carregada em runtime por `src/service/mailService.ts`.
+`src/service/mailService.ts`.
 
 O formulário tem validação com Zod e uma verificação matemática simples no
 frontend. Para proteção anti-spam mais forte, adicione uma validação server-side
