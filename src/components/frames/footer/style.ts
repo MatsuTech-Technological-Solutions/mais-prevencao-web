@@ -5,12 +5,16 @@ import { defaultTheme } from "../../../styles/default";
 export const FooterContainer = styled('footer')`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  position: relative;
-  background-color: ${defaultTheme.whiteGhost};
-  padding: 4rem;
+  background:
+    linear-gradient(180deg, ${defaultTheme.whiteGhost} 0%, ${defaultTheme["blue-100"]} 100%);
+  padding: 5rem 0 0;
+  overflow: hidden;
   
   form {
-    flex: 1;
+    width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    padding-top: 3rem;
   }
 `;

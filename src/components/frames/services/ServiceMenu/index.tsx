@@ -9,13 +9,13 @@ const services = [
   {
     icon: engImage,
     title: "Engenharia de Segurança",
-    color: defaultTheme["green-300"],
+    color: defaultTheme["orange-400"],
     path: "engineering"
   },
   {
     icon: medImage,
     title: "Medicina do Trabalho e Ocupacional",
-    color: defaultTheme["blue-300"],
+    color: defaultTheme["green-300"],
     path: "medical"
   },
   {
@@ -56,29 +56,51 @@ export function ServiceMenu({ selectedService, setSelectedService }: ServiceMenu
         {services.map((service, index) => (
           <Box
             key={index}
+            role="button"
+            tabIndex={0}
             onClick={() => setSelectedService(index)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                setSelectedService(index);
+              }
+            }}
             sx={{
               cursor: 'pointer',
               transition: '0.3s',
               flex: { xs: '1', md: '1' },
-              minWidth: { xs: '100%', md: '150px' },
-              maxWidth: { xs: '100%', md: '200px' },
-              '&:hover': { transform: 'translateY(-5px)' }
+              minWidth: { xs: '100%', md: '180px' },
+              maxWidth: { xs: '100%', md: '240px' },
+              outline: "none",
+              '&:hover': { transform: 'translateY(-4px)' },
+              '&:focus-visible > div': {
+                outline: `3px solid ${defaultTheme["yellow-300"]}`,
+                outlineOffset: 3
+              }
             }}
           >
             <Box
               sx={{
-                p: 2,
+                p: { xs: 1.6, md: 2 },
                 height: '100%',
-                minHeight: { xs: '80px', md: '160px' },
-                bgcolor: selectedService === index ? defaultTheme["green-300"] : 'transparent',
+                minHeight: { xs: '88px', md: '172px' },
+                bgcolor: selectedService === index ? defaultTheme.white : 'rgba(255, 255, 255, 0.08)',
                 borderRadius: '8px',
-                border: `2px solid ${service.color}`,
+                border: `1px solid ${selectedService === index ? service.color : "rgba(255,255,255,0.18)"}`,
+                boxShadow: selectedService === index ? `0 18px 36px rgba(0,0,0,0.18)` : "none",
                 display: 'flex',
                 flexDirection: { xs: 'row', md: 'column' },
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: 2
+                gap: 2,
+                position: "relative",
+                overflow: "hidden",
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  inset: 0,
+                  borderTop: `5px solid ${service.color}`,
+                  opacity: selectedService === index ? 1 : 0.7,
+                }
               }}
             >
               <Box
@@ -86,13 +108,14 @@ export function ServiceMenu({ selectedService, setSelectedService }: ServiceMenu
                 src={service.icon}
                 alt={service.title}
                 sx={{
-                  width: { xs: '50px', md: '60px' },
-                  height: { xs: '50px', md: '60px' },
+                  width: { xs: '54px', md: '64px' },
+                  height: { xs: '54px', md: '64px' },
                   objectFit: "contain",
-                  borderRadius: "16px",
+                  borderRadius: 2,
                   p: 1,
-                  bgcolor: "rgba(255, 255, 255, 0.1)",
-                  flexShrink: 0
+                  bgcolor: selectedService === index ? defaultTheme.whiteGhost : "rgba(255, 255, 255, 0.14)",
+                  flexShrink: 0,
+                  zIndex: 1
                 }}
               />
               <Box sx={{ 
@@ -100,15 +123,17 @@ export function ServiceMenu({ selectedService, setSelectedService }: ServiceMenu
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '100%'
+                width: '100%',
+                zIndex: 1
               }}>
                 <Typography 
                   sx={{ 
-                    fontSize: { xs: '0.8rem', md: '0.9rem' },
-                    fontWeight: 'bold',
-                    color: selectedService === index ? defaultTheme.whiteGhost : service.color,
+                    fontSize: { xs: '0.88rem', md: '0.96rem' },
+                    fontWeight: 800,
+                    color: selectedService === index ? defaultTheme["blue-700"] : defaultTheme.white,
                     textAlign: 'center',
-                    transition: '0.3s'
+                    transition: '0.3s',
+                    lineHeight: 1.25
                   }}
                 >
                   {service.title}

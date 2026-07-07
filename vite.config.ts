@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()], // Define a base correta
@@ -10,12 +9,17 @@ export default defineConfig({
     copyPublicDir: true,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: 'index.html',
       },
       output: {
         assetFileNames: '[name][extname]',
         chunkFileNames: '[name].js',
         entryFileNames: 'main.js',
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          mui: ['@mui/material', '@mui/icons-material'],
+          vendor: ['@emailjs/browser', 'styled-components', 'zod'],
+        },
       }
     }
   }

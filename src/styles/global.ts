@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
+import { defaultTheme } from "./default";
 
 interface ContainerProps {
   h1Color?: string;
@@ -10,7 +11,7 @@ export const Container = styled.div<ContainerProps>`
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.25rem;
   box-sizing: border-box;
 
   @media (min-width: 640px) {
@@ -24,7 +25,7 @@ export const Container = styled.div<ContainerProps>`
   h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: ${({ h1Color, theme }) => h1Color || theme.whiteGhost};
+    color: ${({ h1Color }) => h1Color || defaultTheme.whiteGhost};
     padding-bottom: 2rem;
   }
 `;
@@ -47,14 +48,10 @@ export const ContentWrapper = styled.div`
 `;
 
 export const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'Montserrat';
-    src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-    font-display: swap;
-  }
-
   :root {
     font-family: 'Montserrat', sans-serif;
+    color: ${defaultTheme["gray-900"]};
+    background: ${defaultTheme.whiteGhost};
   }
 
   * {
@@ -68,6 +65,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    scroll-padding-top: 96px;
     
     @media (max-width: 1080px) {
       font-size: 93.75%;
@@ -81,6 +79,18 @@ export const GlobalStyle = createGlobalStyle`
   body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    background: ${defaultTheme.whiteGhost};
+    color: ${defaultTheme["gray-900"]};
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1 {

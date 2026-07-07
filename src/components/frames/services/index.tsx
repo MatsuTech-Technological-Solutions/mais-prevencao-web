@@ -50,29 +50,47 @@ export function Services() {
   return (
     <ServicesContainer id="services">
       <Container maxWidth="xl">
-        <Typography
-          variant="h1"
-          sx={{
-            color: defaultTheme.whiteGhost,
-            fontSize: "2rem",
-            fontWeight: "bold",
-            mb: 3,
-          }}
-        >
-          Serviços
-        </Typography>
+        <Box sx={{ maxWidth: 760, mb: { xs: 3, md: 4 } }}>
+          <Typography
+            sx={{
+              color: defaultTheme["green-300"],
+              fontWeight: 800,
+              textTransform: "uppercase",
+              fontSize: "0.78rem",
+              mb: 1.5,
+            }}
+          >
+            Soluções integradas
+          </Typography>
+          <Typography
+            variant="h2"
+            sx={{
+              color: defaultTheme.white,
+              fontSize: { xs: "2rem", md: "3rem" },
+              lineHeight: 1.08,
+            }}
+          >
+            Serviços para manter sua empresa segura, regular e produtiva.
+          </Typography>
+          <Typography
+            sx={{
+              color: "rgba(255,255,255,0.76)",
+              mt: 2,
+              fontSize: "1.05rem",
+              lineHeight: 1.7,
+            }}
+          >
+            Escolha uma área para ver como a Mais Prevenção apoia a rotina de
+            segurança, saúde ocupacional e desenvolvimento das equipes.
+          </Typography>
+        </Box>
 
         <Grid2 container spacing={2} direction="column">
           <Grid2 size={{ xs: 12 }}>
             <Box
               sx={{
-                bgcolor: defaultTheme.whiteGhost,
-                borderRadius: 2,
-                p: { xs: 2, md: 3 },
-                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                 width: "100%",
                 mb: 2,
-                overflow: "hidden",
               }}
             >
               <Box
@@ -94,10 +112,11 @@ export function Services() {
           <Grid2 size={{ xs: 12 }}>
             <Box
               sx={{
-                bgcolor: defaultTheme.whiteGhost,
+                bgcolor: defaultTheme.white,
                 borderRadius: 2,
-                p: 2,
-                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                p: { xs: 2, md: 3 },
+                boxShadow: "0 24px 60px rgba(0, 0, 0, 0.22)",
+                border: `1px solid rgba(255,255,255,0.18)`,
               }}
             >
               {renderContent()}

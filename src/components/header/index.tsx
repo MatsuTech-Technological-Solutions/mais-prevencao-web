@@ -7,14 +7,15 @@ import {
   IconButton,
   Drawer,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import { defaultTheme } from "../../styles/default";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import logo from "../../assets/img/logo.png";
 import { Container } from "../../styles/global";
@@ -32,7 +33,10 @@ export function Header() {
     { text: "Contato", href: "#contact" },
   ];
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    href: string
+  ) => {
     e.preventDefault();
     const element = document.querySelector(href);
     element?.scrollIntoView({
@@ -42,30 +46,29 @@ export function Header() {
   };
 
   const handleLogoClick = async () => {
-    await navigate('/');
+    await navigate("/");
     window.scrollTo(0, 0);
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 100);
   };
 
   const drawer = (
-    <List>
+    <List sx={{ pt: 2 }}>
       {menuItems.map((item) => (
-        <ListItem
+        <ListItemButton
           key={item.text}
           component="a"
           href={item.href}
           onClick={(e) => handleScroll(e, item.href)}
           sx={{
             color: "white",
+            px: 3,
+            py: 1.5,
             "&:hover": {
               backgroundColor: "rgba(255, 255, 255, 0.08)",
             },
           }}
         >
           <ListItemText primary={item.text} />
-        </ListItem>
+        </ListItemButton>
       ))}
     </List>
   );
@@ -74,25 +77,26 @@ export function Header() {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: defaultTheme.whiteGhost,
-        borderRadius: "0 0 16px 16px",
+        backgroundColor: "rgba(247, 250, 252, 0.94)",
+        backdropFilter: "blur(14px)",
+        borderBottom: `1px solid ${defaultTheme["gray-100"]}`,
         zIndex: 1200,
-        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+        boxShadow: "0 12px 30px rgba(16, 42, 67, 0.08)",
       }}
     >
       <Container>
-        <Toolbar>
+        <Toolbar disableGutters sx={{ minHeight: { xs: 72, md: 86 } }}>
           <Box
             component="img"
             onClick={handleLogoClick}
             sx={{
-              height: { xs: 40, sm: 50, md: 60 },
+              height: { xs: 44, sm: 52, md: 64 },
               width: "auto",
-              maxHeight: { xs: 40, sm: 50, md: 60 },
-              maxWidth: { xs: 150, sm: 200, md: 250 },
-              cursor: 'pointer'
+              maxHeight: { xs: 44, sm: 52, md: 64 },
+              maxWidth: { xs: 176, sm: 220, md: 270 },
+              cursor: "pointer",
             }}
-            alt="Logo"
+            alt="Mais Prevenção"
             src={logo}
           />
 
@@ -105,9 +109,10 @@ export function Header() {
                 onClick={() => setMobileOpen(!mobileOpen)}
                 sx={{
                   ml: "auto",
-                  color: "#1976d2",
+                  color: defaultTheme["blue-500"],
+                  border: `1px solid ${defaultTheme["blue-100"]}`,
                   "&:hover": {
-                    backgroundColor: "rgba(25, 118, 210, 0.04)",
+                    backgroundColor: defaultTheme["blue-100"],
                   },
                 }}
               >
@@ -119,8 +124,8 @@ export function Header() {
                 onClose={() => setMobileOpen(false)}
                 PaperProps={{
                   sx: {
-                    backgroundColor: defaultTheme["blue-300"],
-                    width: 240,
+                    backgroundColor: defaultTheme["blue-700"],
+                    width: 280,
                     "& .MuiListItem-root": {
                       color: "white",
                       "&:hover": {
@@ -134,7 +139,7 @@ export function Header() {
               </Drawer>
             </>
           ) : (
-            <Box sx={{ ml: "auto", display: "flex", gap: 2 }}>
+            <Box sx={{ ml: "auto", display: "flex", gap: 1, alignItems: "center" }}>
               {menuItems.map((item) => (
                 <Button
                   key={item.text}
@@ -142,8 +147,10 @@ export function Header() {
                   href={item.href}
                   onClick={(e) => handleScroll(e, item.href)}
                   sx={{
-                    color: "black",
+                    color: defaultTheme["blue-700"],
                     position: "relative",
+                    px: 1.6,
+                    py: 1,
                     "&::after": {
                       content: '""',
                       position: "absolute",
@@ -152,7 +159,7 @@ export function Header() {
                       borderRadius: "2px",
                       bottom: "0",
                       left: "50%",
-                      backgroundColor: "#1976d2",
+                      backgroundColor: defaultTheme["green-300"],
                       transition: "all 0.3s ease-out",
                     },
                     "&:hover::after": {
@@ -167,6 +174,25 @@ export function Header() {
                   {item.text}
                 </Button>
               ))}
+              <Button
+                component="a"
+                href="#contact"
+                onClick={(e) => handleScroll(e, "#contact")}
+                variant="contained"
+                color="primary"
+                startIcon={<PhoneInTalkIcon />}
+                sx={{
+                  ml: 1,
+                  px: 2,
+                  py: 1,
+                  bgcolor: defaultTheme["blue-500"],
+                  "&:hover": {
+                    bgcolor: defaultTheme["blue-700"],
+                  },
+                }}
+              >
+                Solicitar contato
+              </Button>
             </Box>
           )}
         </Toolbar>

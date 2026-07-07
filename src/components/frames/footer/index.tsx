@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { defaultTheme } from "../../../styles/default";
+import React, { useEffect, useState } from "react";
 import {
-  Grid2,
-  TextField,
-  Button,
   Alert,
   Box,
-  Typography,
+  Button,
+  Grid2,
   Link,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { FooterContainer } from "./style";
-import { Container } from "../../../styles/global";
+import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
+import PlaceIcon from "@mui/icons-material/Place";
+import SendIcon from "@mui/icons-material/Send";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { z } from "zod";
-import { mailService } from "../../../service/mailService";
-import ReCAPTCHA from "react-google-recaptcha";
-import { generateMathProblem } from "../../../utils/captcha";
 
-// Create the schema
+import { mailService } from "../../../service/mailService";
+import { defaultTheme } from "../../../styles/default";
+import { Container } from "../../../styles/global";
+import { generateMathProblem } from "../../../utils/captcha";
+import { FooterContainer } from "./style";
+
 const formSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
   email: z.string().email("Email inválido"),
@@ -26,11 +31,31 @@ const formSchema = z.object({
     .transform((val) => val.replace(/\D/g, ""))
     .refine((val) => {
       if (val.length !== 11) return false;
-      if (!/^[1-9]{2}9[0-9]{8}$/.test(val)) return false;
-      return true;
+      return /^[1-9]{2}9[0-9]{8}$/.test(val);
     }, "Telefone inválido. Digite um número celular válido com DDD"),
   message: z.string().min(1, "Mensagem é obrigatória"),
 });
+
+const contactCards = [
+  {
+    icon: <PlaceIcon />,
+    title: "Atendimento",
+    text: "Zona Leste de SP, rede parceira e serviço in company.",
+    color: defaultTheme["green-300"],
+  },
+  {
+    icon: <PhoneInTalkIcon />,
+    title: "Resposta consultiva",
+    text: "Analisamos a necessidade antes de indicar a solução.",
+    color: defaultTheme["yellow-300"],
+  },
+  {
+    icon: <VerifiedUserIcon />,
+    title: "Conformidade",
+    text: "Apoio técnico para saúde, segurança e documentação.",
+    color: defaultTheme["red-500"],
+  },
+];
 
 export function Footer() {
   const [formData, setFormData] = useState({
@@ -43,7 +68,6 @@ export function Footer() {
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [errors, setErrors] = useState<z.ZodError | null>(null);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captcha, setCaptcha] = useState({ question: "", answer: "" });
   const [userAnswer, setUserAnswer] = useState("");
 
@@ -54,9 +78,20 @@ export function Footer() {
   const formatPhone = (value: string) => {
     const numbers = value.replace(/\D/g, "");
     if (numbers.length <= 2) return numbers;
-    if (numbers.length <= 7)
+    if (numbers.length <= 7) {
       return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    }
     return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+  };
+
+  const getError = (field: string) =>
+    errors?.errors.find((err) => err.path[0] === field)?.message;
+
+  const clearFieldError = (field: keyof typeof formData | "captcha") => {
+    if (!errors) return;
+
+    const newErrors = errors.errors.filter((err) => err.path[0] !== field);
+    setErrors(newErrors.length ? new z.ZodError(newErrors) : null);
   };
 
   const validate = () => {
@@ -73,22 +108,11 @@ export function Footer() {
     }
   };
 
-  const clearFieldError = (field: keyof typeof formData) => {
-    if (errors) {
-      const newErrors = errors.errors.filter((err) => err.path[0] !== field);
-      if (newErrors.length === 0) {
-        setErrors(null);
-      } else {
-        setErrors(new z.ZodError(newErrors));
-      }
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    if (userAnswer !== captcha.answer) {
+    if (userAnswer.trim() !== captcha.answer) {
       setStatus("error");
       setErrors(
         new z.ZodError([
@@ -107,18 +131,16 @@ export function Footer() {
     setStatus("loading");
 
     try {
-      const formattedData = {
+      await mailService.sendEmail({
         ...formData,
-        phone: formatPhone(formData.phone), // Send formatted phone number
-        time: new Date().toLocaleString("pt-BR"), // Add timestamp
-        year: new Date().getFullYear().toString(), // Add year for template
-        captchaToken, // Add captcha token to the data
-      };
-
-      await mailService.sendEmail(formattedData);
+        phone: formatPhone(formData.phone),
+        time: new Date().toLocaleString("pt-BR"),
+        year: new Date().getFullYear().toString(),
+      });
       setFormData({ name: "", email: "", phone: "", message: "" });
       setUserAnswer("");
       setCaptcha(generateMathProblem());
+      setErrors(null);
       setStatus("success");
     } catch (error) {
       console.error("Erro no envio:", error);
@@ -128,150 +150,241 @@ export function Footer() {
 
   return (
     <FooterContainer id="contact">
-      <Container h1Color={defaultTheme["blue-500"]}>
-        <h1>Contato</h1>
-        <form onSubmit={handleSubmit}>
-          <Grid2 container spacing={4} sx={{ width: "100%", m: 0 }}>
-            <Grid2 size={{ xs: 12, sm: 4 }}>
-              <TextField
-                fullWidth
-                label="Nome ✱"
-                value={formData.name}
-                onChange={(e) => {
-                  setFormData({ ...formData, name: e.target.value });
-                  if (e.target.value) clearFieldError("name");
+      <Container>
+        <Grid2 container spacing={{ xs: 4, md: 6 }} alignItems="stretch">
+          <Grid2 size={{ xs: 12, md: 5 }}>
+            <Stack spacing={2.5} sx={{ height: "100%" }}>
+              <Typography
+                sx={{
+                  color: defaultTheme["green-700"],
+                  fontWeight: 800,
+                  textTransform: "uppercase",
+                  fontSize: "0.78rem",
                 }}
-                error={!!errors?.errors.find((err) => err.path[0] === "name")}
-                helperText={
-                  errors?.errors.find((err) => err.path[0] === "name")?.message
-                }
-              />
-            </Grid2>
-            <Grid2 size={{ xs: 12, sm: 4 }}>
-              <TextField
-                fullWidth
-                label="Email ✱"
-                type="email"
-                value={formData.email}
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
-                  if (e.target.value) clearFieldError("email");
+              >
+                Contato
+              </Typography>
+              <Typography
+                variant="h2"
+                sx={{
+                  color: defaultTheme["blue-700"],
+                  fontSize: { xs: "2rem", md: "3rem" },
+                  lineHeight: 1.08,
                 }}
-                error={!!errors?.errors.find((err) => err.path[0] === "email")}
-                helperText={
-                  errors?.errors.find((err) => err.path[0] === "email")?.message
-                }
-              />
-            </Grid2>
+              >
+                Vamos entender o que sua empresa precisa prevenir.
+              </Typography>
+              <Typography
+                sx={{
+                  color: defaultTheme["gray-600"],
+                  fontSize: "1.05rem",
+                  lineHeight: 1.8,
+                }}
+              >
+                Envie uma mensagem com sua necessidade. A equipe da Mais
+                Prevenção retorna com uma orientação inicial e o melhor caminho
+                para sua operação.
+              </Typography>
 
-            <Grid2 size={{ xs: 12, sm: 4 }}>
-              <TextField
-                fullWidth
-                label="Telefone"
-                value={formatPhone(formData.phone)}
-                onChange={(e) => {
-                  const newPhone = e.target.value.replace(/\D/g, "");
-                  setFormData({ ...formData, phone: newPhone });
-                  if (newPhone) clearFieldError("phone");
-                }}
-                error={!!errors?.errors.find((err) => err.path[0] === "phone")}
-                helperText={
-                  errors?.errors.find((err) => err.path[0] === "phone")?.message
-                }
-                slotProps={{
-                  input: {
-                    inputProps: {
-                      inputMode: "numeric",
-                    },
-                  },
-                }}
-              />
-            </Grid2>
-            <Grid2 size={{ xs: 12 }}>
-              <TextField
-                fullWidth
-                label="Mensagem ✱"
-                multiline
-                rows={6}
-                value={formData.message}
-                onChange={(e) => {
-                  setFormData({ ...formData, message: e.target.value });
-                  if (e.target.value) clearFieldError("message");
-                }}
-                error={
-                  !!errors?.errors.find((err) => err.path[0] === "message")
-                }
-                helperText={
-                  errors?.errors.find((err) => err.path[0] === "message")
-                    ?.message
-                }
-              />
-            </Grid2>
+              <Stack spacing={1.5} sx={{ mt: 1 }}>
+                {contactCards.map((item) => (
+                  <Box
+                    key={item.title}
+                    sx={{
+                      display: "flex",
+                      gap: 1.5,
+                      alignItems: "flex-start",
+                      bgcolor: defaultTheme.white,
+                      border: `1px solid ${defaultTheme["gray-100"]}`,
+                      borderRadius: 2,
+                      p: 2,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 42,
+                        height: 42,
+                        borderRadius: 2,
+                        bgcolor: item.color,
+                        color: defaultTheme["blue-800"],
+                        display: "grid",
+                        placeItems: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {item.icon}
+                    </Box>
+                    <Box>
+                      <Typography
+                        sx={{
+                          color: defaultTheme["blue-700"],
+                          fontWeight: 900,
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: defaultTheme["gray-500"],
+                          fontWeight: 600,
+                          mt: 0.4,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </Stack>
+            </Stack>
+          </Grid2>
 
-            <Grid2 container spacing={2} sx={{ mt: 2, width: "100%" }}>
-              <Grid2 size={{ xs: 12, sm: 4 }}>
-                <TextField
-                  fullWidth
-                  label={`Verificação: ${captcha.question}`}
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  error={
-                    !!errors?.errors.find((err) => err.path[0] === "captcha")
-                  }
-                  helperText={
-                    errors?.errors.find((err) => err.path[0] === "captcha")
-                      ?.message ||
-                    "Digite o resultado da soma para verificar que você é humano"
-                  }
-                />
-              </Grid2>
-              <Grid2 size={{ xs: 12, sm: 8 }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  fullWidth
-                  disabled={status === "loading"}
-                  sx={{
-                    py: 2,
-                    height: "56px",
-                    fontSize: "1.1rem",
-                    fontWeight: 500,
-                    width: "100%",
-                  }}
-                >
-                  {status === "loading" ? "Enviando..." : "Enviar Mensagem"}
-                </Button>
+          <Grid2 size={{ xs: 12, md: 7 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{
+                bgcolor: defaultTheme.white,
+                borderRadius: 2,
+                p: { xs: 2.5, md: 3 },
+                border: `1px solid ${defaultTheme["gray-100"]}`,
+                boxShadow: "0 24px 60px rgba(16, 42, 67, 0.12)",
+              }}
+            >
+              <Grid2 container spacing={2.2}>
+                <Grid2 size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    label="Nome"
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                      if (e.target.value) clearFieldError("name");
+                    }}
+                    error={!!getError("name")}
+                    helperText={getError("name")}
+                  />
+                </Grid2>
+                <Grid2 size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    fullWidth
+                    label="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (e.target.value) clearFieldError("email");
+                    }}
+                    error={!!getError("email")}
+                    helperText={getError("email")}
+                  />
+                </Grid2>
+
+                <Grid2 size={{ xs: 12 }}>
+                  <TextField
+                    fullWidth
+                    label="Telefone celular"
+                    value={formatPhone(formData.phone)}
+                    onChange={(e) => {
+                      const newPhone = e.target.value.replace(/\D/g, "");
+                      setFormData({ ...formData, phone: newPhone });
+                      if (newPhone) clearFieldError("phone");
+                    }}
+                    error={!!getError("phone")}
+                    helperText={getError("phone") || "Use DDD + celular"}
+                    slotProps={{
+                      input: {
+                        inputProps: {
+                          inputMode: "numeric",
+                        },
+                      },
+                    }}
+                  />
+                </Grid2>
+
+                <Grid2 size={{ xs: 12 }}>
+                  <TextField
+                    fullWidth
+                    label="Mensagem"
+                    multiline
+                    rows={6}
+                    value={formData.message}
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                      if (e.target.value) clearFieldError("message");
+                    }}
+                    error={!!getError("message")}
+                    helperText={getError("message")}
+                  />
+                </Grid2>
+
+                <Grid2 size={{ xs: 12, sm: 5 }}>
+                  <TextField
+                    fullWidth
+                    label={`Verificação: ${captcha.question}`}
+                    value={userAnswer}
+                    onChange={(e) => {
+                      setUserAnswer(e.target.value);
+                      if (e.target.value) clearFieldError("captcha");
+                    }}
+                    error={!!getError("captcha")}
+                    helperText={
+                      getError("captcha") ||
+                      "Digite o resultado para liberar o envio"
+                    }
+                  />
+                </Grid2>
+                <Grid2 size={{ xs: 12, sm: 7 }}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    disabled={status === "loading"}
+                    endIcon={<SendIcon />}
+                    sx={{
+                      height: "56px",
+                      bgcolor: defaultTheme["blue-500"],
+                      "&:hover": { bgcolor: defaultTheme["blue-700"] },
+                    }}
+                  >
+                    {status === "loading" ? "Enviando..." : "Enviar mensagem"}
+                  </Button>
+                </Grid2>
 
                 {status === "success" && (
-                  <Alert severity="success" sx={{ mt: 2 }}>
-                    ✔️ Mensagem enviada com sucesso!
-                  </Alert>
+                  <Grid2 size={{ xs: 12 }}>
+                    <Alert
+                      icon={<MarkEmailReadIcon />}
+                      severity="success"
+                      sx={{ borderRadius: 2 }}
+                    >
+                      Mensagem enviada com sucesso.
+                    </Alert>
+                  </Grid2>
                 )}
 
-                {status === "error" && (
-                  <Alert severity="error" sx={{ mt: 2 }}>
-                    <Box>
-                      ❌ Ocorreu um erro ao enviar sua mensagem. Por favor,
-                      tente novamente.
-                    </Box>
-                  </Alert>
+                {status === "error" && !getError("captcha") && (
+                  <Grid2 size={{ xs: 12 }}>
+                    <Alert severity="error" sx={{ borderRadius: 2 }}>
+                      Não foi possível enviar sua mensagem agora. Revise os
+                      campos ou tente novamente em instantes.
+                    </Alert>
+                  </Grid2>
                 )}
               </Grid2>
-            </Grid2>
+            </Box>
           </Grid2>
-        </form>
+        </Grid2>
       </Container>
+
       <Box
         sx={{
-          bgcolor: defaultTheme.whiteGhost,
+          bgcolor: defaultTheme["blue-800"],
+          mt: 5,
           py: 3,
-          borderTop: `1px solid ${defaultTheme["gray-700"]}`,
-          boxShadow: "0px -2px 10px rgba(0,0,0,0.1)",
-          position: "absolute",
-          width: "100%",
-          bottom: 0,
-          left: 0,
+          borderTop: `5px solid ${defaultTheme["green-300"]}`,
         }}
       >
         <Container>
@@ -285,9 +398,8 @@ export function Footer() {
               <Typography
                 variant="body2"
                 sx={{
-                  color: defaultTheme["gray-400"],
-                  fontSize: "0.9rem",
-                  fontWeight: 400,
+                  color: "rgba(255,255,255,0.76)",
+                  fontWeight: 600,
                 }}
               >
                 © {new Date().getFullYear()} Mais Prevenção. Todos os direitos
@@ -298,9 +410,8 @@ export function Footer() {
               <Typography
                 variant="body2"
                 sx={{
-                  color: defaultTheme["gray-400"],
-                  fontSize: "0.9rem",
-                  fontWeight: 400,
+                  color: "rgba(255,255,255,0.76)",
+                  fontWeight: 600,
                   display: "flex",
                   alignItems: "center",
                   gap: 0.5,
@@ -312,12 +423,11 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    color: defaultTheme["gray-300"],
+                    color: defaultTheme["yellow-300"],
                     textDecoration: "none",
-                    transition: "color 0.2s ease",
+                    fontWeight: 800,
                     "&:hover": {
-                      color: defaultTheme["blue-500"],
-                      textDecoration: "none",
+                      color: defaultTheme.white,
                     },
                   }}
                 >

@@ -1,140 +1,238 @@
-import { Box, Grid2, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid2, Stack, Typography } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { AboutContainer } from "./styles";
 
-import aboutUs from "../../../assets/img/about-us.png";
+import aboutUs from "../../../assets/img/about-us.webp";
 import { defaultTheme } from "../../../styles/default";
 import { Container } from "../../../styles/global";
 
-export function About() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const highlights = [
+  { value: "11+", label: "anos de atuação" },
+  { value: "20+", label: "anos de experiência técnica" },
+  { value: "60%", label: "redução potencial de riscos trabalhistas" },
+];
 
+const expertise = [
+  "Elaboração de PGR e PCMSO",
+  "Estruturação e suporte ao SESMT",
+  "Treinamentos especializados",
+  "Sinalização e combate a incêndio",
+  "Consultoria em motivação, recrutamento e seleção",
+];
+
+const differentials = [
+  "Clínica própria próxima ao Metrô Vila Matilde",
+  "Rede de clínicas parceiras em São Paulo",
+  "Atendimento in company para exames, treinamentos e assessoria",
+];
+
+export function About() {
   return (
     <AboutContainer id="about">
       <Container>
-        <Grid2 container spacing={4} mb={6}>
+        <Grid2 container spacing={{ xs: 4, md: 6 }} alignItems="center">
           <Grid2 size={{ xs: 12, md: 6 }}>
-            <Box display="flex" flexDirection="column" gap={2}>
-              <Typography variant="h4" fontWeight="bold" color="primary">
-                Sobre Nós
+            <Stack spacing={2.5}>
+              <Typography
+                sx={{
+                  color: defaultTheme["green-700"],
+                  fontWeight: 800,
+                  textTransform: "uppercase",
+                  fontSize: "0.78rem",
+                }}
+              >
+                Sobre a Mais Prevenção
               </Typography>
+
+              <Typography
+                variant="h2"
+                sx={{
+                  color: defaultTheme["blue-700"],
+                  fontSize: { xs: "2rem", md: "3rem" },
+                  lineHeight: 1.08,
+                }}
+              >
+                Segurança, medicina ocupacional e gestão preventiva em um só
+                parceiro.
+              </Typography>
+
               <Typography
                 variant="body1"
-                sx={{ fontWeight: 600 }}
-                color={defaultTheme["gray-900"]}
+                sx={{
+                  color: defaultTheme["gray-600"],
+                  fontSize: "1.05rem",
+                  lineHeight: 1.8,
+                  maxWidth: 640,
+                }}
               >
-                Na <strong>Mais Prevenção</strong>, somos referência em{" "}
-                <strong>Segurança e Medicina do Trabalho</strong> há 11 anos.
-                Combinamos atendimento consultivo com soluções personalizadas,
-                analisando cada necessidade para oferecer propostas estratégicas
-                às demandas reais da sua empresa.
+                Somos referência em segurança e medicina do trabalho, unindo
+                atendimento consultivo, equipe multidisciplinar e soluções
+                personalizadas para as demandas reais da sua empresa.
               </Typography>
 
-              <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                Atuamos com uma{" "}
-                <strong>clínica própria na Zona Leste de SP</strong> (próxima ao
-                Metrô Vila Matilde), <strong>rede de clínicas parceiras</strong>{" "}
-                em diversas regiões do estado e sistema{" "}
-                <strong>In Company</strong> - levamos exames, treinamentos e
-                assessoria diretamente ao seu negócio.
-              </Typography>
-
-              <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                Contamos com equipe multidisciplinar de alto nível:{" "}
-                <strong>
-                  Médicos do Trabalho, Engenheiros de Segurança, Enfermeiros,
-                  Fonoaudiólogos e Peritos Judiciais
-                </strong>
-                , todos com mais de 20 anos de experiência em saúde ocupacional.
-              </Typography>
-
-              <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                Nossas soluções reduzem{" "}
-                <strong>até 60% dos riscos trabalhistas </strong> através da
-                prevenção eficaz de acidentes, controle de doenças ocupacionais
-                e gestão compliance com normas regulamentadoras (NRs).
-              </Typography>
-
-              <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                <strong>Resultado comprovado:</strong> empresas que nos escolhem
-                têm aumento de produtividade e redução de custos com
-                afastamentos. Garantimos segurança jurídica e qualidade de vida
-                para seus colaboradores!
-              </Typography>
-            </Box>
+              <Grid2 container spacing={1.5}>
+                {highlights.map((item) => (
+                  <Grid2 key={item.label} size={{ xs: 12, sm: 4 }}>
+                    <Box
+                      sx={{
+                        height: "100%",
+                        border: `1px solid ${defaultTheme["gray-100"]}`,
+                        borderTop: `5px solid ${defaultTheme["green-300"]}`,
+                        borderRadius: 2,
+                        bgcolor: defaultTheme.white,
+                        p: 2,
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: defaultTheme["blue-700"],
+                          fontWeight: 900,
+                          fontSize: "1.9rem",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {item.value}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: defaultTheme["gray-500"],
+                          fontWeight: 700,
+                          fontSize: "0.84rem",
+                          mt: 1,
+                        }}
+                      >
+                        {item.label}
+                      </Typography>
+                    </Box>
+                  </Grid2>
+                ))}
+              </Grid2>
+            </Stack>
           </Grid2>
 
-          {!isMobile && (
-            <Grid2 size={{ xs: 12, md: 6 }}>
+          <Grid2 size={{ xs: 12, md: 6 }}>
+            <Box
+              sx={{
+                position: "relative",
+                borderRadius: 2,
+                overflow: "hidden",
+                border: `1px solid ${defaultTheme["gray-100"]}`,
+                boxShadow: "0 24px 60px rgba(16, 42, 67, 0.14)",
+              }}
+            >
               <Box
                 component="img"
                 src={aboutUs}
-                alt="Sobre nossa empresa"
+                alt="Equipe de segurança e medicina do trabalho"
                 sx={{
                   width: "100%",
-                  height: "auto",
+                  aspectRatio: { xs: "4 / 3", md: "5 / 4" },
+                  objectFit: "cover",
                 }}
               />
-            </Grid2>
-          )}
-        </Grid2>
-        <Grid2 container spacing={4}>
-          <Grid2 size={{ xs: 12, md: 6 }}>
-            <Box>
-              <Typography variant="h6" color="primary" gutterBottom>
-                Nossa expertise inclui:
-              </Typography>
-              <Box component="ul" sx={{ pl: 2 }}>
-                <Typography
-                  component="li"
-                  variant="body1"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Elaboração de PGR e PCMSO
-                </Typography>
-                <Typography
-                  component="li"
-                  variant="body1"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Estruturação e suporte ao SESMT
-                </Typography>
-                <Typography
-                  component="li"
-                  variant="body1"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Treinamentos especializados
-                </Typography>
-                <Typography
-                  component="li"
-                  variant="body1"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Projetos e equipamentos para sistemas de sinalização e combate
-                  a incêndio
-                </Typography>
-                <Typography
-                  component="li"
-                  variant="body1"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Consultoria em motivação, recrutamento e seleção de equipes
+              <Box
+                sx={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  p: 2.5,
+                  color: defaultTheme.white,
+                  background:
+                    "linear-gradient(180deg, rgba(11,39,66,0) 0%, rgba(11,39,66,0.92) 100%)",
+                }}
+              >
+                <Typography sx={{ fontWeight: 800 }}>
+                  Atendimento técnico com visão prática de operação.
                 </Typography>
               </Box>
             </Box>
           </Grid2>
+        </Grid2>
+
+        <Grid2 container spacing={3} sx={{ mt: { xs: 4, md: 6 } }}>
           <Grid2 size={{ xs: 12, md: 6 }}>
-            <Box>
-              <Typography variant="h6" color="primary" gutterBottom>
-                Por que escolher a Mais Prevenção?
+            <Box
+              sx={{
+                height: "100%",
+                bgcolor: defaultTheme.white,
+                borderRadius: 2,
+                p: { xs: 2.5, md: 3 },
+                border: `1px solid ${defaultTheme["gray-100"]}`,
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{ color: defaultTheme["blue-700"], fontWeight: 800, mb: 2 }}
+              >
+                Nossa expertise inclui
               </Typography>
-              <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                Estamos comprometidos em cuidar da saúde, segurança e bem-estar
-                da sua equipe, entregando soluções que unem qualidade,
-                eficiência e inovação.
+              <Stack spacing={1.4}>
+                {expertise.map((item) => (
+                  <Typography
+                    key={item}
+                    sx={{
+                      color: defaultTheme["gray-700"],
+                      fontWeight: 700,
+                      display: "flex",
+                      gap: 1.2,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <CheckCircleIcon
+                      sx={{
+                        color: defaultTheme["green-500"],
+                        fontSize: 20,
+                        mt: "2px",
+                      }}
+                    />
+                    {item}
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
+          </Grid2>
+
+          <Grid2 size={{ xs: 12, md: 6 }}>
+            <Box
+              sx={{
+                height: "100%",
+                bgcolor: defaultTheme["blue-700"],
+                borderRadius: 2,
+                p: { xs: 2.5, md: 3 },
+                border: `1px solid ${defaultTheme["blue-600"]}`,
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{ color: defaultTheme.white, fontWeight: 800, mb: 2 }}
+              >
+                Como atuamos
               </Typography>
+              <Stack spacing={1.4}>
+                {differentials.map((item) => (
+                  <Typography
+                    key={item}
+                    sx={{
+                      color: "rgba(255,255,255,0.84)",
+                      fontWeight: 700,
+                      display: "flex",
+                      gap: 1.2,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <CheckCircleIcon
+                      sx={{
+                        color: defaultTheme["yellow-300"],
+                        fontSize: 20,
+                        mt: "2px",
+                      }}
+                    />
+                    {item}
+                  </Typography>
+                ))}
+              </Stack>
             </Box>
           </Grid2>
         </Grid2>
