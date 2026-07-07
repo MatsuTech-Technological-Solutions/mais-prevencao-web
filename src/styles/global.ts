@@ -30,23 +30,6 @@ export const Container = styled.div<ContainerProps>`
   }
 `;
 
-export const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 1rem;
-
-  @media (min-width: 640px) {
-    padding: 2rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding: 4rem;
-  }
-`;
-
 export const GlobalStyle = createGlobalStyle`
   :root {
     font-family: 'Montserrat', sans-serif;
