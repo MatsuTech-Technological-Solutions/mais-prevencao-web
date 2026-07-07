@@ -34,6 +34,22 @@ O deploy é feito pelo GitHub Pages via `.github/workflows/static.yml`.
 O workflow instala as dependências, executa `npm run build`, cria `dist/404.html`
 como fallback para rotas do React Router e publica a pasta `dist/`.
 
+## SEO e indexação
+
+O projeto publica os arquivos técnicos usados por crawlers:
+
+- `public/robots.txt`
+- `public/sitemap.xml`
+- `public/CNAME`
+
+O `index.html` inclui canonical, metas para Googlebot, Open Graph, Twitter Card,
+hreflang e JSON-LD com `Organization`, `LocalBusiness`, `ProfessionalService`,
+`WebSite` e `WebPage`.
+
+Os dados estruturados usam apenas informações já presentes no projeto. Telefone,
+rua, CEP, horários e perfis oficiais da empresa devem ser adicionados quando
+forem confirmados.
+
 ## Configuração de email
 
 O envio do formulário usa EmailJS. A configuração pública fica em

@@ -16,13 +16,25 @@
       name="keywords"
       content="medicina do trabalho, medicina, trabalho, segurança do trabalho, PGR, PCMSO, exames ocupacionais, laudos técnicos, São Paulo, consultoria SST, medicina ocupacional"
     />
-    <meta name="robots" content="index, follow" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta name="language" content="Portuguese" />
     <meta name="author" content="Mais Prevenção" />
-    <link rel="canonical" href="https://www.maisprevencao.com.br" />
+    <link rel="canonical" href="https://www.maisprevencao.com.br/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://www.maisprevencao.com.br/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.maisprevencao.com.br/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.maisprevencao.com.br" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Mais Prevenção" />
+    <meta property="og:url" content="https://www.maisprevencao.com.br/" />
     <meta
       property="og:title"
       content="Mais Prevenção - Medicina e Segurança do Trabalho em São Paulo"
@@ -33,11 +45,19 @@
     />
     <meta
       property="og:image"
-      content="https://www.maisprevencao.com.br/og-image.jpg"
+      content="https://www.maisprevencao.com.br/logo.png"
     />
+    <meta
+      property="og:image:secure_url"
+      content="https://www.maisprevencao.com.br/logo.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="561" />
+    <meta property="og:image:height" content="194" />
+    <meta property="og:image:alt" content="Logo da Mais Prevenção" />
 
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://www.maisprevencao.com.br" />
+    <meta property="twitter:url" content="https://www.maisprevencao.com.br/" />
     <meta
       property="twitter:title"
       content="Mais Prevenção - Medicina e Segurança do Trabalho"
@@ -48,8 +68,9 @@
     />
     <meta
       property="twitter:image"
-      content="https://www.maisprevencao.com.br/twitter-image.jpg"
+      content="https://www.maisprevencao.com.br/logo.png"
     />
+    <meta property="twitter:image:alt" content="Logo da Mais Prevenção" />
 
     <link rel="stylesheet" href="https://unpkg.com/scss-reset/reset.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -65,21 +86,126 @@
     <script src="/config.js"></script>
   </head>
   <body>
-    <!-- Schema.org markup for Google -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Mais Prevenção",
-        "image": "https://www.maisprevencao.com.br/logo.jpg",
-        "description": "Especialistas em Medicina e Segurança do Trabalho",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "São Paulo",
-          "addressRegion": "SP",
-          "addressCountry": "BR"
-        },
-        "priceRange": "$$"
+        "@graph": [
+          {
+            "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
+            "@id": "https://www.maisprevencao.com.br/#organization",
+            "name": "Mais Prevenção",
+            "url": "https://www.maisprevencao.com.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://www.maisprevencao.com.br/#logo",
+              "url": "https://www.maisprevencao.com.br/logo.png",
+              "width": 561,
+              "height": 194
+            },
+            "image": {
+              "@id": "https://www.maisprevencao.com.br/#logo"
+            },
+            "description": "Especialistas em Medicina e Segurança do Trabalho. PGR, PCMSO, laudos técnicos, exames ocupacionais e treinamentos em São Paulo.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "São Paulo",
+              "addressRegion": "SP",
+              "addressCountry": "BR"
+            },
+            "areaServed": [
+              {
+                "@type": "AdministrativeArea",
+                "name": "São Paulo"
+              },
+              {
+                "@type": "Place",
+                "name": "Zona Leste de São Paulo"
+              },
+              {
+                "@type": "Place",
+                "name": "Vila Matilde"
+              }
+            ],
+            "priceRange": "$$",
+            "knowsAbout": [
+              "Medicina do Trabalho",
+              "Segurança do Trabalho",
+              "PGR",
+              "PCMSO",
+              "LTCAT",
+              "PPP",
+              "Laudos Técnicos",
+              "Exames Ocupacionais",
+              "Treinamentos de Segurança",
+              "Brigada de Incêndio"
+            ],
+            "makesOffer": {
+              "@type": "OfferCatalog",
+              "name": "Serviços de segurança e medicina do trabalho",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Engenharia de Segurança",
+                    "serviceType": "Segurança do Trabalho"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Medicina do Trabalho e Ocupacional",
+                    "serviceType": "Medicina Ocupacional"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Brigada de Incêndio",
+                    "serviceType": "Treinamento de Segurança"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Motivação e Desenvolvimento",
+                    "serviceType": "Desenvolvimento de Equipes"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.maisprevencao.com.br/#website",
+            "url": "https://www.maisprevencao.com.br/",
+            "name": "Mais Prevenção",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://www.maisprevencao.com.br/#organization"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://www.maisprevencao.com.br/#webpage",
+            "url": "https://www.maisprevencao.com.br/",
+            "name": "Mais Prevenção - Medicina e Segurança do Trabalho em São Paulo",
+            "description": "Especialistas em Medicina e Segurança do Trabalho. PGR, PCMSO, laudos técnicos, exames ocupacionais e treinamentos em São Paulo.",
+            "inLanguage": "pt-BR",
+            "isPartOf": {
+              "@id": "https://www.maisprevencao.com.br/#website"
+            },
+            "about": {
+              "@id": "https://www.maisprevencao.com.br/#organization"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://www.maisprevencao.com.br/#logo"
+            }
+          }
+        ]
       }
     </script>
     <div id="root"></div>
