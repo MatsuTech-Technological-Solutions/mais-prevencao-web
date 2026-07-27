@@ -8,16 +8,16 @@ import { defaultTheme } from "../../../styles/default";
 import { Container } from "../../../styles/global";
 
 const highlights = [
-  { value: "11+", label: "anos de atuação" },
+  { value: "13+", label: "anos de atuação" },
   { value: "20+", label: "anos de experiência técnica" },
   { value: "60%", label: "redução potencial de riscos trabalhistas" },
 ];
 
 const expertise = [
-  "Elaboração de PGR e PCMSO",
-  "Estruturação e suporte ao SESMT",
-  "Treinamentos especializados",
-  "Sinalização e combate a incêndio",
+  "Elaboração de PGR, PCMSO e Gestão de Obras (NR-18)",
+  "Estruturação e suporte ao SESMT e CIPA",
+  "Treinamentos especializados e Brigada de Incêndio",
+  "Laudos de Engenharia, SPDA, NR-10, NR-12 e NR-13",
   "Consultoria em motivação, recrutamento e seleção",
 ];
 

@@ -37,7 +37,7 @@ const carouselData = [
 ];
 
 const trustItems = [
-  "11 anos de atuação",
+  "Mais de 13 anos de atuação",
   "Clínica própria",
   "Atendimento in company",
 ];
