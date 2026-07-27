@@ -3,7 +3,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { AboutContainer } from "./styles";
 
-import aboutUs from "../../../assets/img/about-us.webp";
+import aboutUs from "../../../assets/img/about-us.jpg";
 import { defaultTheme } from "../../../styles/default";
 import { Container } from "../../../styles/global";
 
