@@ -3,14 +3,9 @@ import { defaultTheme } from "../../../styles/default";
 import { ServiceMenu } from "./ServiceMenu";
 import { ServicesContainer } from "./styles";
 import { Engineering } from "./engineering";
+import { Development } from "./development";
+import { FireFighting } from "./fireFighting";
 import { Medical } from "./medical";
-import { Hygiene } from "./hygiene";
-import { SafetyManagement } from "./safetyManagement";
-import { Ergonomics } from "./ergonomics";
-import { Environment } from "./environment";
-import { Construction } from "./construction";
-import { Training } from "./training";
-import { Consulting } from "./consulting";
 import { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -19,18 +14,9 @@ export function Services() {
   const location = useLocation();
   const [selectedService, setSelectedService] = useState(0);
 
+  // Serviços movidos para o componente ServiceMenu
   const servicePaths = useMemo(
-    () => [
-      "engineering",
-      "medical",
-      "hygiene",
-      "safety-management",
-      "ergonomics",
-      "environment",
-      "construction",
-      "training",
-      "consulting",
-    ],
+    () => ["engineering", "medical", "fire-fighting", "development"],
     []
   );
 
@@ -53,19 +39,9 @@ export function Services() {
       case 1:
         return <Medical />;
       case 2:
-        return <Hygiene />;
+        return <FireFighting />;
       case 3:
-        return <SafetyManagement />;
-      case 4:
-        return <Ergonomics />;
-      case 5:
-        return <Environment />;
-      case 6:
-        return <Construction />;
-      case 7:
-        return <Training />;
-      case 8:
-        return <Consulting />;
+        return <Development />;
       default:
         return <Engineering />;
     }
@@ -151,4 +127,5 @@ export function Services() {
     </ServicesContainer>
   );
 }
+
 

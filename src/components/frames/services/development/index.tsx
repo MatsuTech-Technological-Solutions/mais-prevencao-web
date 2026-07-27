@@ -3,34 +3,34 @@ import { defaultTheme } from "../../../../styles/default";
 
 const subServices = [
   {
-    title: "Auditorias e Inspeções",
-    description: "Diagnóstico de Segurança",
+    title: "PGR, GRO e Análises de Risco",
+    description: "Gestão de Riscos e Permissões de Trabalho",
     details:
-      "Diagnóstico completo das condições de trabalho para garantir conformidade com a legislação vigente.",
+      "Elaboração e acompanhamento do PGR, APR (Análise Preliminar de Risco), AST e procedimentos de Permissão de Trabalho (PT) para tarefas críticas.",
   },
   {
-    title: "Documentos Obrigatórios",
-    description: "Conformidade Legal",
+    title: "Treinamentos das NRs",
+    description: "Capacitação Normativa e Operacional",
     details:
-      "Desenvolvimento de PGR, PCMSO, LTCAT, PPP e outros relatórios técnicos necessários para evitar passivos trabalhistas.",
+      "Treinamentos presenciais e in company para NR-01, NR-05 (CIPA), NR-06 (EPI), NR-10, NR-11, NR-12, NR-18, NR-20, NR-33, NR-35, Direção Defensiva e Operação de Máquinas.",
   },
   {
-    title: "Treinamento e Capacitação",
-    description: "Desenvolvimento Profissional",
+    title: "Gestão de Contratadas",
+    description: "Auditoria Documental de Terceiros",
     details:
-      "Cursos presenciais e online para conscientizar colaboradores sobre segurança no ambiente de trabalho.",
+      "Auditoria contínua da documentação legal e treinamentos de empreiteiras e prestadores terceirizados, prevenindo passivos trabalhistas.",
   },
   {
-    title: "Análise de Acidentes",
-    description: "Prevenção e Investigação",
+    title: "Meio Ambiente (PGRS)",
+    description: "Gerenciamento de Resíduos e Licenciamento",
     details:
-      "Identificação das causas de acidentes e elaboração de medidas preventivas para evitar novas ocorrências.",
+      "Elaboração do PGRS (Gerenciamento de Resíduos Sólidos), inventários, licenças ambientais, plano de emergência e auditorias ambientais.",
   },
   {
-    title: "Gestão de EPIs e EPCs",
-    description: "Proteção e Segurança",
+    title: "Consultoria ISO & ESG",
+    description: "Implantação ISO 45001 e ISO 14001",
     details:
-      "Acompanhamento do uso correto de Equipamentos de Proteção Individual e Coletiva, garantindo conformidade com as normas de segurança.",
+      "Consultoria para estruturação de Sistemas de Gestão de Saúde, Segurança e Meio Ambiente, auditorias internas, KPIs e ESG aplicado à segurança.",
   },
 ];
 
@@ -42,3 +42,4 @@ export function Development() {
     />
   );
 }
+

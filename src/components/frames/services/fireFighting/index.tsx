@@ -4,33 +4,33 @@ import { defaultTheme } from "../../../../styles/default";
 const subServices = [
   {
     title: "Brigada de Incêndio",
-    description: "Treinamento e Formação",
+    description: "Treinamento, Formação e Reciclagem (NR-23)",
     details:
-      "Formação de brigadistas conforme a NR 23, com técnicas de combate a incêndios, evacuação de emergência e uso de extintores.",
+      "Formação de brigadistas conforme a NR 23 e Instruções Técnicas, com aulas práticas de combate a incêndio, suporte básico e evacuação.",
   },
   {
-    title: "PPCI",
+    title: "Projetos PPCI e AVCB",
     description: "Plano de Prevenção e Proteção Contra Incêndios",
     details:
-      "Desenvolvimento de planos de prevenção, incluindo instalação de alarmes, extintores e sistemas de combate a incêndios.",
+      "Desenvolvimento de projetos de PPCI/AVCB, sistemas de alarme e detecção de fumaça, hidrantes, sprinklers, iluminação e sinalização de emergência.",
   },
   {
-    title: "Simulados de Evacuação",
-    description: "Preparação para Emergências",
+    title: "Primeiros Socorros & LOTO",
+    description: "Suporte Básico e Bloqueio de Energias",
     details:
-      "Testes práticos para preparar funcionários em casos de emergência, garantindo respostas rápidas e eficazes.",
+      "Treinamentos práticos de primeiros socorros emergenciais e implantação do programa LOTO (Lockout/Tagout - Bloqueio e Etiquetagem de Energias Perigosas).",
   },
   {
-    title: "Sinalização e Equipamentos",
-    description: "Infraestrutura de Segurança",
+    title: "Simulados e Emergência",
+    description: "Planos de Atendimento e Abandono de Área",
     details:
-      "Instalação de placas de sinalização, iluminação de emergência, extintores e hidrantes conforme as normas do Corpo de Bombeiros.",
+      "Elaboração de Planos de Resposta a Emergências (PRE), rotas de fuga e testes simulados periódicos para abandono de edificações.",
   },
   {
-    title: "Produtos Perigosos",
+    title: "Produtos Perigosos (NR-20)",
     description: "Gestão de Inflamáveis e Combustíveis",
     details:
-      "Adequação de instalações conforme a NR 20, garantindo segurança no armazenamento e manuseio de substâncias perigosas.",
+      "Prontuários e adequação de instalações conforme a NR 20, garantindo a segurança no armazenamento, transvasamento e manuseio de inflamáveis.",
   },
 ];
 
@@ -39,3 +39,4 @@ export function FireFighting() {
     <ServiceTabs accentColor={defaultTheme["red-500"]} services={subServices} />
   );
 }
+
