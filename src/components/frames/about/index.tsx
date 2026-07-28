@@ -19,6 +19,7 @@ const expertise = [
   "Treinamentos especializados e Brigada de Incêndio",
   "Laudos de Engenharia, SPDA, NR-10, NR-12 e NR-13",
   "Consultoria em motivação, recrutamento e seleção",
+  "Engenharia de Segurança e SST para Construção Civil",
 ];
 
 const differentials = [
